@@ -1,6 +1,5 @@
 /* eslint-disable default-case */
 import React, { Fragment, useReducer } from "react";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { produce } from "immer";
 import { find, includes, map, trim } from "lodash";
 import states from "../../utils/state.json";
@@ -14,7 +13,7 @@ const constructInitialState = () => {
     state: "",
     district: "",
     city: "",
-    pinCode: "",
+    pin_code: "",
     location: {},
   };
 };
@@ -87,18 +86,18 @@ const fields = [
   {
     title: "Pin code",
     type: "text",
-    name: "pinCode",
+    name: "pin_code",
     placeholder: "Enter Pin code",
     isRequired: true,
     autoComplete: "postal-code",
   },
-  {
-    title: "Location",
-    type: "location",
-    name: "location",
-    placeholder: "Select location",
-    isRequired: true,
-  },
+  // {
+  //   title: "Location",
+  //   type: "location",
+  //   name: "location",
+  //   placeholder: "Select location",
+  //   isRequired: true,
+  // },
 ];
 
 const reducer = (state, action) => {
@@ -136,8 +135,8 @@ const reducer = (state, action) => {
         draft.city = trim(action.value || "");
         break;
       }
-      case "pinCode": {
-        draft.pinCode = trim(action.value || "");
+      case "pin_code": {
+        draft.pin_code = trim(action.value || "");
         break;
       }
       case "location": {
@@ -148,11 +147,41 @@ const reducer = (state, action) => {
   });
 };
 
+function postData(url, data) {
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      // Add any additional headers if needed
+    },
+    body: JSON.stringify(data), // Convert the data object to a JSON string
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); // Parse the response as JSON
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      throw error;
+    });
+}
+
 export default function CreateRestaurantForm() {
   const [state, dispatch] = useReducer(reducer, constructInitialState());
-  console.log("state", state);
+  const onSave = (e) => {
+    e.preventDefault();
+    postData(`${process.env.REACT_APP_API_ENDPOINT}/restaurant/create`, state)
+      .then((responseData) => {
+        console.log("Data sent successfully:", responseData);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
   return (
-    <form>
+    <form onSubmit={onSave}>
       <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
         {fields.map((field) => (
           <Fragment key={field.name}>

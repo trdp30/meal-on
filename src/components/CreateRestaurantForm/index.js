@@ -1,439 +1,258 @@
-import React from "react";
+/* eslint-disable default-case */
+import React, { Fragment, useReducer } from "react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { produce } from "immer";
+import { find, includes, map, trim } from "lodash";
+import states from "../../utils/state.json";
+
+const constructInitialState = () => {
+  return {
+    name: "",
+    email: "",
+    address1: "",
+    address2: "",
+    state: "",
+    district: "",
+    city: "",
+    pinCode: "",
+    location: {},
+  };
+};
+
+const fields = [
+  {
+    title: "Name",
+    type: "text",
+    name: "name",
+    placeholder: "Sharma Hotel",
+    isRequired: true,
+    autoComplete: "given-name",
+  },
+  {
+    title: "Contact Phone",
+    type: "text",
+    name: "phone",
+    placeholder: "0123456789",
+    isRequired: true,
+    autoComplete: "phone",
+  },
+  {
+    title: "Contact Email",
+    type: "email",
+    name: "email",
+    placeholder: "your@email.com",
+    isRequired: true,
+    autoComplete: "email",
+  },
+  {
+    title: "Address 1",
+    type: "text",
+    name: "address1",
+    placeholder: "Enter Address 1",
+    isRequired: true,
+    autoComplete: "street-address",
+  },
+  {
+    title: "Address 2",
+    type: "text",
+    name: "address2",
+    placeholder: "Enter Address 2",
+    isRequired: false,
+    autoComplete: "address-level1",
+  },
+  {
+    title: "State",
+    type: "select",
+    name: "state",
+    placeholder: "Select State",
+    isRequired: true,
+    options: states,
+  },
+  {
+    title: "District",
+    type: "select",
+    name: "district",
+    placeholder: "Select District",
+    isRequired: true,
+    options: [],
+  },
+  {
+    title: "City/Town/Village",
+    type: "text",
+    name: "city",
+    placeholder: "Raha",
+    isRequired: true,
+    autoComplete: "address-level2",
+  },
+  {
+    title: "Pin code",
+    type: "text",
+    name: "pinCode",
+    placeholder: "Enter Pin code",
+    isRequired: true,
+    autoComplete: "postal-code",
+  },
+  {
+    title: "Location",
+    type: "location",
+    name: "location",
+    placeholder: "Select location",
+    isRequired: true,
+  },
+];
+
+const reducer = (state, action) => {
+  return produce(state, (draft) => {
+    switch (action.type) {
+      case "name": {
+        draft.name = trim(action.value || "");
+        break;
+      }
+      case "email": {
+        draft.email = trim(action.value || "");
+        break;
+      }
+      case "phone": {
+        draft.phone = trim(action.value || "");
+        break;
+      }
+      case "address1": {
+        draft.address1 = trim(action.value || "");
+        break;
+      }
+      case "address2": {
+        draft.address2 = trim(action.value || "");
+        break;
+      }
+      case "state": {
+        draft.state = trim(action.value || "");
+        break;
+      }
+      case "district": {
+        draft.district = trim(action.value || "");
+        break;
+      }
+      case "city": {
+        draft.city = trim(action.value || "");
+        break;
+      }
+      case "pinCode": {
+        draft.pinCode = trim(action.value || "");
+        break;
+      }
+      case "location": {
+        draft.location = action.value;
+        break;
+      }
+    }
+  });
+};
 
 export default function CreateRestaurantForm() {
+  const [state, dispatch] = useReducer(reducer, constructInitialState());
+  console.log("state", state);
   return (
     <form>
-      <div className="space-y-12 sm:space-y-16">
-        <div>
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Profile
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-            This information will be displayed publicly so be careful what you
-            share.
-          </p>
-
-          <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="username"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                Username
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-                    workcation.com/
-                  </span>
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="janesmith"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="about"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                About
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <textarea
-                  id="about"
-                  name="about"
-                  rows={3}
-                  className="block w-full max-w-2xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={""}
-                />
-                <p className="mt-3 text-sm leading-6 text-gray-600">
-                  Write a few sentences about yourself.
-                </p>
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-center sm:gap-4 sm:py-6">
-              <label
-                htmlFor="photo"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Photo
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <div className="flex items-center gap-x-3">
-                  <UserCircleIcon
-                    className="h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+      <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+        {fields.map((field) => (
+          <Fragment key={field.name}>
+            {field.type === "select" && (
+              <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label
+                  htmlFor={field.name}
+                  className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
+                >
+                  {field.title}
+                  {field.isRequired && <span className="text-red-500">*</span>}
+                </label>
+                <div className="mt-2 sm:col-span-2 sm:mt-0">
+                  <select
+                    id={field.name}
+                    name={field.name}
+                    autoComplete={field.autoComplete}
+                    placeholder={field.placeholder}
+                    required={field.isRequired}
+                    disabled={field.name === "district" ? !state?.state : false}
+                    onChange={(e) =>
+                      dispatch({ type: field.name, value: e?.target.value })
+                    }
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                   >
-                    Change
-                  </button>
+                    <option value="" disabled selected>
+                      {field.placeholder}
+                    </option>
+                    {field.name === "district" ? (
+                      <>
+                        {map(
+                          find(states, ["state", state.state])?.districts,
+                          (district) => (
+                            <option key={district}>{district}</option>
+                          ),
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {map(field.options, (state) => (
+                          <option key={state.state}>{state.state}</option>
+                        ))}
+                      </>
+                    )}
+                  </select>
                 </div>
               </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="cover-photo"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                Cover photo
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <div className="flex max-w-2xl justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                  <div className="text-center">
-                    <PhotoIcon
-                      className="mx-auto h-12 w-12 text-gray-300"
-                      aria-hidden="true"
-                    />
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                      <label
-                        htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                      >
-                        <span>Upload a file</span>
-                        <input
-                          id="file-upload"
-                          name="file-upload"
-                          type="file"
-                          className="sr-only"
-                        />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
-                    </div>
-                    <p className="text-xs leading-5 text-gray-600">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Personal Information
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-            Use a permanent address where you can receive mail.
-          </p>
-
-          <div className="mt-10 space-y-8 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="first-name"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                First name
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="last-name"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                Last name
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                Email address
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-md sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                Country
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            )}
+            {field.type === "location" && (
+              <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label
+                  htmlFor={field.name}
+                  className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
                 >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
+                  {field.title}
+                  {field.isRequired && <span className="text-red-500">*</span>}
+                </label>
+                <div className="mt-2 sm:col-span-2 sm:mt-0">
+                  <input
+                    type={"text"}
+                    name={field.name}
+                    id={field.name}
+                    placeholder={field.placeholder}
+                    autoComplete={field.autoComplete}
+                    required={field.isRequired}
+                    onChange={(e) =>
+                      dispatch({ type: field.name, value: e?.target.value })
+                    }
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  />
+                </div>
               </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="street-address"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                Street address
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  type="text"
-                  name="street-address"
-                  id="street-address"
-                  autoComplete="street-address"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xl sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                City
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  autoComplete="address-level2"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="region"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                State / Province
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  type="text"
-                  name="region"
-                  id="region"
-                  autoComplete="address-level1"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
-              <label
-                htmlFor="postal-code"
-                className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
-              >
-                ZIP / Postal code
-              </label>
-              <div className="mt-2 sm:col-span-2 sm:mt-0">
-                <input
-                  type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autoComplete="postal-code"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Notifications
-          </h2>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-600">
-            We'll always let you know about important changes, but you pick what
-            else you want to hear about.
-          </p>
-
-          <div className="mt-10 space-y-10 border-b border-gray-900/10 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
-            <fieldset>
-              <legend className="sr-only">By Email</legend>
-              <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:py-6">
-                <div
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                  aria-hidden="true"
+            )}
+            {includes(["text", "email", "phone"], field.type) && (
+              <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                <label
+                  htmlFor={field.name}
+                  className="block text-sm font-medium leading-6 text-gray-900 sm:pt-1.5"
                 >
-                  By Email
-                </div>
-                <div className="mt-4 sm:col-span-2 sm:mt-0">
-                  <div className="max-w-lg space-y-6">
-                    <div className="relative flex gap-x-3">
-                      <div className="flex h-6 items-center">
-                        <input
-                          id="comments"
-                          name="comments"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                      </div>
-                      <div className="text-sm leading-6">
-                        <label
-                          htmlFor="comments"
-                          className="font-medium text-gray-900"
-                        >
-                          Comments
-                        </label>
-                        <p className="mt-1 text-gray-600">
-                          Get notified when someones posts a comment on a
-                          posting.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="relative flex gap-x-3">
-                      <div className="flex h-6 items-center">
-                        <input
-                          id="candidates"
-                          name="candidates"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                      </div>
-                      <div className="text-sm leading-6">
-                        <label
-                          htmlFor="candidates"
-                          className="font-medium text-gray-900"
-                        >
-                          Candidates
-                        </label>
-                        <p className="mt-1 text-gray-600">
-                          Get notified when a candidate applies for a job.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="relative flex gap-x-3">
-                      <div className="flex h-6 items-center">
-                        <input
-                          id="offers"
-                          name="offers"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                      </div>
-                      <div className="text-sm leading-6">
-                        <label
-                          htmlFor="offers"
-                          className="font-medium text-gray-900"
-                        >
-                          Offers
-                        </label>
-                        <p className="mt-1 text-gray-600">
-                          Get notified when a candidate accepts or rejects an
-                          offer.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  {field.title}
+                  {field.isRequired && <span className="text-red-500">*</span>}
+                </label>
+                <div className="mt-2 sm:col-span-2 sm:mt-0">
+                  <input
+                    type={field.type}
+                    name={field.name}
+                    id={field.name}
+                    placeholder={field.placeholder}
+                    autoComplete={field.autoComplete}
+                    required={field.isRequired}
+                    onChange={(e) =>
+                      dispatch({ type: field.name, value: e?.target.value })
+                    }
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  />
                 </div>
               </div>
-            </fieldset>
-            <fieldset>
-              <legend className="sr-only">Push Notifications</legend>
-              <div className="sm:grid sm:grid-cols-3 sm:items-baseline sm:gap-4 sm:py-6">
-                <div
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                  aria-hidden="true"
-                >
-                  Push Notifications
-                </div>
-                <div className="mt-1 sm:col-span-2 sm:mt-0">
-                  <div className="max-w-lg">
-                    <p className="text-sm leading-6 text-gray-600">
-                      These are delivered via SMS to your mobile phone.
-                    </p>
-                    <div className="mt-6 space-y-6">
-                      <div className="flex items-center gap-x-3">
-                        <input
-                          id="push-everything"
-                          name="push-notifications"
-                          type="radio"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label
-                          htmlFor="push-everything"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Everything
-                        </label>
-                      </div>
-                      <div className="flex items-center gap-x-3">
-                        <input
-                          id="push-email"
-                          name="push-notifications"
-                          type="radio"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label
-                          htmlFor="push-email"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          Same as email
-                        </label>
-                      </div>
-                      <div className="flex items-center gap-x-3">
-                        <input
-                          id="push-nothing"
-                          name="push-notifications"
-                          type="radio"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                        />
-                        <label
-                          htmlFor="push-nothing"
-                          className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                          No push notifications
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </div>
+            )}
+          </Fragment>
+        ))}
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">

@@ -17,11 +17,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default function initializeFirebase() {
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+export default async function initializeFirebase() {
+  const app = await initializeApp(firebaseConfig);
+  const analytics = await getAnalytics(app);
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV === "production") {
     analytics.disable();
   }
   return {

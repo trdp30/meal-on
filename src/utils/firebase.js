@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -16,16 +13,34 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-export default async function initializeFirebase() {
-  const app = await initializeApp(firebaseConfig);
-  const analytics = await getAnalytics(app);
+let app, analytics, auth;
 
-  if (process.env.NODE_ENV === "production") {
-    analytics.disable();
-  }
-  return {
-    app,
-    analytics,
-  };
+// Initialize Firebase
+// export default async function initializeFirebase() {
+//   app = await initializeApp(firebaseConfig, "menuOnRoad");
+//   analytics = await getAnalytics(app);
+
+//   if (process.env.NODE_ENV !== "production") {
+//     // analytics.app.disable();
+//   }
+//   auth = await getAuth(app);
+//   return {
+//     app,
+//     analytics,
+//     auth,
+//   };
+// }
+
+app = initializeApp(firebaseConfig, "menuOnRoad");
+analytics = getAnalytics(app);
+
+if (process.env.NODE_ENV !== "production") {
+  // analytics.app.disable();
 }
+auth = getAuth(app);
+
+console.log("auth", auth);
+
+export { app, analytics, auth };
+
+export default app;

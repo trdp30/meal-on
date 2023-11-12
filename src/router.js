@@ -13,6 +13,10 @@ import Restaurants from "./containers/Admin/Restaurants";
 import RestaurantSetting from "./containers/Admin/RestaurantSetting";
 import UpdateDish from "./containers/Admin/UpdateDish";
 import UpdateRestaurant from "./containers/Admin/UpdateRestaurant";
+import Login from "./containers/Login";
+import Register from "./containers/Register";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import Logout from "./containers/Authentication/Logout";
 
 const router = createBrowserRouter([
   {
@@ -20,12 +24,32 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/logout",
+    element: (
+      <AuthenticatedRoute>
+        <Logout />
+      </AuthenticatedRoute>
+    ),
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
     path: "/restaurant",
     element: <MenuList />,
   },
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <AuthenticatedRoute>
+        <AdminLayout />
+      </AuthenticatedRoute>
+    ),
     children: [
       { path: "billings", element: <Billings /> },
       { path: "create-dish", element: <CreateDish /> },

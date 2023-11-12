@@ -30,7 +30,7 @@ function AdminNavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/admin/logout" className="text-white">
+            <Link to="/logout" className="text-white">
               Logout
             </Link>
           </li>

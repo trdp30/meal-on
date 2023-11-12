@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AuthenticatedRoute /> Should render and match the snapshot 1`] = `
+<div>
+  <div
+    class="h-full bg-slate-50 relative"
+  >
+    <div
+      class="h-full flex justify-center items-center "
+    >
+      <div
+        class="flex shadow-lg items-center p-6 rounded-md bg-white"
+      >
+        <div
+          class="flex flex-col space-y-8 flex-shrink-0 w-full md:w-1/2"
+        >
+          <h2
+            class="flex md:text-5xl text-2xl font-semibold leading-8 align-middle items-center"
+          >
+            <svg
+              aria-hidden="true"
+              class="w-7 h-7 text-red-600 inline md:hidden"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z"
+                fill-rule="evenodd"
+              />
+            </svg>
+             
+            Forbidden!
+          </h2>
+          <p
+            class="text-lg break-word"
+          >
+            We are Sorry
+            ..
+          </p>
+          <p
+            class="text-md break-word"
+          >
+            The page you're trying to access has restricted access.
+          </p>
+          <div
+            class="w-[120px]"
+          >
+            <button
+              class="text-black-700  border border-gray-200 hover:border-blue-400 hover:text-blue-700 active:border-blue-300 focus:ring-blue-300 focus:ring-2 active:text-blue-700 active:bg-blue-50 focus-visible:outline-0 px-4 py-2.5 text-sm font-medium leading-4 rounded-lg w-full flex justify-center relative"
+              type="button"
+            >
+              <span
+                class="mr-2.5"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="svg-inline--fa fa-house "
+                  data-icon="house"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  viewBox="0 0 576 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </span>
+              <span>
+                Go Home
+              </span>
+            </button>
+          </div>
+        </div>
+        <img
+          alt="Forbidden"
+          class="md:max-w-md md:w-1/2 hidden md:block -mr-20"
+          src="IMAGE_MOCK"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -46,7 +46,6 @@ const dataMap = {
 };
 
 const Content = ({ title, summary, close, actions, variant }) => {
-  const isProcessing = variant === "processing";
   return (
     <div
       className={classNames(

@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import { TextField } from "../../components/Fields";
-import { Button } from "../../components/Button";
-import { triggerToast } from "../../components/Notification";
+import { TextField } from "components/Fields";
+import { Button } from "components/Button";
+import { triggerToast } from "components/Notification";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase";
+import { auth } from "utils/firebase";
 import { useContext, useEffect, useState } from "react";
 import { trim } from "lodash";
-import AuthContext from "../../contexts/AuthContext";
+import AuthContext from "contexts/AuthContext";
 
 export const metadata = {
   title: "Sign In",
@@ -58,7 +58,6 @@ export default function Login() {
         className="absolute inset-0 h-full w-full object-cover z-0"
         src={"/assets/images/background-auth.jpg"}
         alt=""
-        unoptimized
       />
       <div className="flex flex-col justify-center items-center space-y-8 bg-green-50 py-24 px-8 relative z-[1]">
         <h2 className="text-lg font-semibold text-gray-900">

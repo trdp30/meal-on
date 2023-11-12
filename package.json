@@ -40,10 +40,10 @@
     "workbox-streams": "^6.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "prettify": "prettier --write ./src/**/*.js",
     "create-component": "chmod +x create-react-component.sh && ./create-react-component.sh"
   },
@@ -66,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "prettier": "3.0.3"
   }
 }

@@ -4,10 +4,11 @@
  *
  */
 
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../utils/firebase";
+import { analytics, auth } from "utils/firebase";
 import { signOut } from "firebase/auth";
+import { setUserId, setUserProperties } from "firebase/analytics";
 
 const AuthContext = React.createContext({
   user: {},
@@ -38,6 +39,17 @@ function AuthProvider(props) {
     }),
     [user, loading, error, isAuthenticated, logout],
   );
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setUserId(analytics, user?.uid);
+      setUserProperties(analytics, {
+        isAuthenticated: true,
+        email: user.email,
+        uid: user?.uid,
+      });
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

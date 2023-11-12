@@ -15,31 +15,14 @@ const firebaseConfig = {
 
 let app, analytics, auth;
 
-// Initialize Firebase
-// export default async function initializeFirebase() {
-//   app = await initializeApp(firebaseConfig, "menuOnRoad");
-//   analytics = await getAnalytics(app);
-
-//   if (process.env.NODE_ENV !== "production") {
-//     // analytics.app.disable();
-//   }
-//   auth = await getAuth(app);
-//   return {
-//     app,
-//     analytics,
-//     auth,
-//   };
-// }
-
 app = initializeApp(firebaseConfig, "menuOnRoad");
 analytics = getAnalytics(app);
 
 if (process.env.NODE_ENV !== "production") {
-  // analytics.app.disable();
+  // analytics.disable();
 }
-auth = getAuth(app);
 
-console.log("auth", auth);
+auth = getAuth(app);
 
 export { app, analytics, auth };
 

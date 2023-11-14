@@ -5,13 +5,17 @@ import router from "./router";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import { store } from "store/configureStore";
 
 function App() {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-      <ToastContainer style={{ width: "auto" }} />
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <ToastContainer style={{ width: "auto" }} />
+      </AuthProvider>
+    </Provider>
   );
 }
 

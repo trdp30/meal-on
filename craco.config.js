@@ -7,6 +7,7 @@ module.exports = {
       contexts: path.join(path.resolve(__dirname, "./src/contexts/")),
       containers: path.join(path.resolve(__dirname, "./src/containers/")),
       utils: path.join(path.resolve(__dirname, "./src/utils/")),
+      store: path.join(path.resolve(__dirname, "./src/store/")),
     },
   },
 };

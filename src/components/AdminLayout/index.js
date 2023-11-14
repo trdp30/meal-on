@@ -4,10 +4,10 @@ import AdminNavBar from "../AdminNavBar";
 
 function AdminLayout() {
   return (
-    <div>
+    <>
       <AdminNavBar />
       <Outlet />
-    </div>
+    </>
   );
 }
 

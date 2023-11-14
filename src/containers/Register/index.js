@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import { Button } from "../../components/Button";
-import { SelectField, TextField } from "../../components/Fields";
-import { SlimLayout } from "../../components/SlimLayout";
+import Button from "components/Button";
+import { SelectField, TextField } from "components/Fields";
+import { SlimLayout } from "components/SlimLayout";
 
 export const metadata = {
   title: "Sign Up",

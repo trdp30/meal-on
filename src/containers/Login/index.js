@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { TextField } from "components/Fields";
-import { Button } from "components/Button";
+import Button from "components/Button";
 import { triggerToast } from "components/Notification";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "utils/firebase";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { trim } from "lodash";
 import AuthContext from "contexts/AuthContext";
 
@@ -52,6 +52,16 @@ export default function Login() {
     }
   };
 
+  const disabledSubmit = useMemo(() => {
+    if (!trim(credentials?.email || "")) {
+      return true;
+    }
+    if (!trim(credentials?.password || "")) {
+      return true;
+    }
+    return isLoading;
+  }, [credentials, isLoading]);
+
   return (
     <div className="flex flex-1 justify-center items-center h-screen w-screen">
       <img
@@ -91,22 +101,16 @@ export default function Login() {
               disabled={isLoading}
             />
           </div>
-          <div>
-            <Button
-              type="submit"
-              variant="solid"
-              color="blue"
-              className="w-full"
-              disabled={
-                !(credentials.email && credentials.password) && isLoading
-              }
-              onClick={() => handleSignIn(credentials)}
-            >
-              <span>
-                Sign in <span aria-hidden="true">&rarr;</span>
-              </span>
-            </Button>
-          </div>
+          <Button
+            buttonType="submit"
+            disabled={disabledSubmit}
+            loading={isLoading}
+            onClick={() => handleSignIn(credentials)}
+          >
+            <div className="w-full">
+              Sign in <span aria-hidden="true">&rarr;</span>
+            </div>
+          </Button>
         </form>
         <p className="mt-2 text-sm text-gray-700">
           Don’t have an account?{" "}

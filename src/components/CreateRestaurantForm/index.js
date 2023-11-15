@@ -18,6 +18,7 @@ const constructInitialState = () => {
     city: "",
     pin_code: "",
     location: {},
+    phone: "",
   };
 };
 

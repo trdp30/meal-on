@@ -25,11 +25,6 @@ function AdminNavBar() {
             </Link>
           </li>
           <li>
-            <Link to="/admin/create-restaurant" className="text-white">
-              Create Restaurant
-            </Link>
-          </li>
-          <li>
             <Link to="/logout" className="text-white">
               Logout
             </Link>

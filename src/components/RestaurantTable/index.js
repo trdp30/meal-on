@@ -21,12 +21,15 @@ export function RestaurantTable(props) {
   const { data = [], isLoading = false, customRowId } = props;
   const sortedColumns = useMemo(() => getColumns(), []);
   const [columnFilters, onColumnFiltersChange] = useState([]);
-  const getRowId = useCallback((row, relativeIndex, parent) => {
-    if (customRowId) {
-      return row[customRowId];
-    }
-    return parent ? [parent.id, relativeIndex].join(".") : relativeIndex;
-  }, []);
+  const getRowId = useCallback(
+    (row, relativeIndex, parent) => {
+      if (customRowId) {
+        return row[customRowId];
+      }
+      return parent ? [parent.id, relativeIndex].join(".") : relativeIndex;
+    },
+    [customRowId],
+  );
 
   const table = useReactTable({
     data,

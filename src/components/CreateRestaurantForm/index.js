@@ -149,7 +149,7 @@ const reducer = (state, action) => {
       }
       case "reset": {
         const fields = constructInitialState();
-        Object.keys(fields).map((key) => {
+        Object.keys(fields).forEach((key) => {
           draft[key] = fields[key];
         });
         break;

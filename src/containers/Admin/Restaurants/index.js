@@ -19,7 +19,7 @@ function Restaurants() {
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
-      <div className="flex justify-end p-4">
+      <div className="flex justify-end p-4 pt-0">
         <Button onClick={navigateToCreateRestaurant}>Create Restaurant</Button>
       </div>
       <div className="flex flex-1 flex-col overflow-y-auto md:px-4 sm:px-2 px-0">

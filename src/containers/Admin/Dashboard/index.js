@@ -1,4 +1,6 @@
-import { Fragment, useState } from "react";
+/* eslint-disable jsx-a11y/no-redundant-roles */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ArrowDownCircleIcon,

@@ -1,5 +1,6 @@
 import AddressCard from "components/AddressCard";
 import { sortBy } from "lodash";
+import NameColumn from "./NameColumn";
 
 export const columns = [
   {
@@ -11,32 +12,8 @@ export const columns = [
     header: "Restaurants",
     size: 240,
     className: "text-left p-2",
-    cellClassName: "p-3",
-    cell: ({ row, getValue }) => {
-      return (
-        <div>
-          <p className="text-sm text-gray-700 font-semibold">{getValue()}</p>
-          <div className="font-normal lg:hidden">
-            <div className="sm:hidden">
-              <div className="mt-1 truncate text-gray-700 text-xs">
-                {row?.original?.status || "-"}
-              </div>
-            </div>
-            <div className="md:hidden">
-              <div className="mt-1 truncate text-gray-700">
-                <p className="text-xs">{row?.original?.email || "-"}</p>
-                <p className="text-xs">{row?.original?.phone || "-"}</p>
-              </div>
-            </div>
-            <div className="lg:hidden">
-              <div className="mt-1 truncate text-gray-500">
-                <AddressCard row={row} />
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    },
+    cellClassName: "p-3 py-5",
+    cell: NameColumn,
   },
   {
     id: "status",
@@ -66,11 +43,11 @@ export const columns = [
       return (
         <div>
           <p className="text-sm">
-            <span className="font-semibold">Email</span>:{" "}
+            <span className="font-semibold text-xs">Email</span>:{" "}
             <span>{row?.original?.email || "-"}</span>
           </p>
           <p className="text-sm">
-            <span className="font-semibold">Phone</span>:{" "}
+            <span className="font-semibold text-xs">Phone</span>:{" "}
             <span>{row?.original?.phone || "-"}</span>
           </p>
         </div>

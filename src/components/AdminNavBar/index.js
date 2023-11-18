@@ -8,7 +8,7 @@ const navigation = [
   { name: "Dashboard", href: "/admin/dashboard" },
   { name: "Restaurants", href: "/admin/restaurants" },
   { name: "Orders", href: "/admin/orders" },
-  { name: "Billings", href: "/admin/billings" },
+  { name: "Invoices", href: "/admin/invoices" },
 ];
 
 export default function AdminNavBar() {

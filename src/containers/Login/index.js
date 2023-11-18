@@ -5,24 +5,34 @@ import { triggerToast } from "components/Notification";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "utils/firebase";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { trim } from "lodash";
+import { includes, trim } from "lodash";
 import AuthContext from "contexts/AuthContext";
+import roles from "utils/roles";
 
 export const metadata = {
   title: "Sign In",
 };
 
 export default function Login() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, currentUserRoles, isAuthenticating } =
+    useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/admin/dashboard");
+    if (
+      !isAuthenticating &&
+      isAuthenticated &&
+      Array.isArray(currentUserRoles)
+    ) {
+      if (includes(currentUserRoles, roles.admin)) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, currentUserRoles, isAuthenticating]);
 
   const handleChange = (e) => {
     setCredentials((prev) => ({

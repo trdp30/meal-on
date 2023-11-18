@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       { path: "dashboard", element: <Dashboard /> },
       { path: "order-details", element: <OrderDetails /> },
       { path: "orders", element: <Orders /> },
-      { path: "restaurant-details", element: <RestaurantDetails /> },
+      { path: "restaurant/:restaurant_id", element: <RestaurantDetails /> },
       { path: "restaurants", element: <Restaurants /> },
       { path: "restaurant-setting", element: <RestaurantSetting /> },
       { path: "update-dish", element: <UpdateDish /> },

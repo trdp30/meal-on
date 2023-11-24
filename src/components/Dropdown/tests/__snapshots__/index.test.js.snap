@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dropdown /> Should render and match the snapshot 1`] = `
+<div>
+  <div
+    class=" css-b62m3t-container"
+  >
+    <span
+      class="css-1f43avz-a11yText-A11yText"
+      id="react-select-3-live-region"
+    />
+    <span
+      aria-atomic="false"
+      aria-live="polite"
+      aria-relevant="additions text"
+      class="css-1f43avz-a11yText-A11yText"
+    />
+    <div
+      class="border rounded px-2 py-[3px] !shadow-0  !border-gray-200 !bg-gray-50 css-13cymwt-control"
+    >
+      <div
+        class="!p-0 css-1fdsijx-ValueContainer"
+      >
+        <div
+          class="text-sm font-normal leading-[16px] !mx-0 !text-gray-400 css-1jqq78o-placeholder"
+          id="react-select-3-placeholder"
+        >
+          Select...
+        </div>
+        <input
+          aria-autocomplete="list"
+          aria-describedby="react-select-3-placeholder"
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-readonly="true"
+          class="css-mohuvp-dummyInput-DummyInput"
+          id="react-select-3-input"
+          inputmode="none"
+          role="combobox"
+          tabindex="0"
+          value=""
+        />
+      </div>
+      <div
+        class="h-8 css-1hb7zxy-IndicatorsContainer"
+      >
+        <span
+          class="hidden css-1u9des2-indicatorSeparator"
+        />
+        <div
+          aria-hidden="true"
+          class=" css-1xc3v61-indicatorContainer"
+        >
+          <svg
+            aria-hidden="true"
+            class="svg-inline--fa fa-chevron-down text-gray-900 "
+            data-icon="chevron-down"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 512 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <input
+      name="dropdown"
+      type="hidden"
+      value=""
+    />
+  </div>
+</div>
+`;

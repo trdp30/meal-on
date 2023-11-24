@@ -6,9 +6,9 @@ import AuthContext from "contexts/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/admin/dashboard" },
-  { name: "Restaurants", href: "/admin/restaurants" },
-  { name: "Orders", href: "/admin/orders" },
-  { name: "Invoices", href: "/admin/invoices" },
+  { name: "Restaurant", href: "/admin/restaurant" },
+  { name: "Order", href: "/admin/order" },
+  { name: "Invoice", href: "/admin/invoice" },
 ];
 
 export default function AdminNavBar() {

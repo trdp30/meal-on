@@ -1,11 +1,12 @@
 /* eslint-disable default-case */
-import React, { Fragment, useReducer, useState } from "react";
+import React, { Fragment, useEffect, useReducer, useState } from "react";
 import { produce } from "immer";
 import { find, includes, map, trim } from "lodash";
 import states from "utils/state.json";
 import { useCreateRestaurantMutation } from "store/sliceApis/restaurantApi";
 import Button from "components/Button";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 const constructInitialState = () => {
   return {
@@ -161,6 +162,7 @@ const reducer = (state, action) => {
 export default function CreateRestaurantForm({ back }) {
   const [createRestaurant, result] = useCreateRestaurantMutation();
   const [isReloadForm, toggleReload] = useState(false);
+  const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(reducer, constructInitialState());
 
@@ -180,6 +182,12 @@ export default function CreateRestaurantForm({ back }) {
   const handleCancel = () => {
     back();
   };
+
+  useEffect(() => {
+    if (result?.isSuccess && !result?.isLoading && result?.data?._id) {
+      navigate(`/admin/restaurant/${result?.data?._id}/add-geo-location`);
+    }
+  }, [result?.isSuccess, result?.isLoading, result?.data?._id, navigate]);
 
   if (isReloadForm) {
     return <></>;

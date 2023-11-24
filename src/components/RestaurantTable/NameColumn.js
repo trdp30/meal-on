@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const NameColumn = ({ row, getValue }) => {
   const navigate = useNavigate();
   const onNameClick = () => {
-    navigate("/admin/restaurant/" + row?.original?._id);
+    navigate(row?.original?._id);
   };
   return (
     <div>

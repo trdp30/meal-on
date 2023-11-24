@@ -17,6 +17,8 @@ import Login from "./containers/Login";
 import Register from "./containers/Register";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Logout from "./containers/Authentication/Logout";
+import AddGeoLocation from "containers/Admin/AddGeoLocation";
+import AddMenuItems from "containers/Admin/AddMenuItems";
 
 const router = createBrowserRouter([
   {
@@ -51,14 +53,22 @@ const router = createBrowserRouter([
       </AuthenticatedRoute>
     ),
     children: [
-      { path: "billings", element: <Billings /> },
+      { path: "invoice", element: <Billings /> },
       { path: "create-dish", element: <CreateDish /> },
       { path: "create-restaurant", element: <CreateRestaurant /> },
       { path: "dashboard", element: <Dashboard /> },
-      { path: "order-details", element: <OrderDetails /> },
-      { path: "orders", element: <Orders /> },
       { path: "restaurant/:restaurant_id", element: <RestaurantDetails /> },
-      { path: "restaurants", element: <Restaurants /> },
+      { path: "order-details", element: <OrderDetails /> },
+      { path: "order", element: <Orders /> },
+      {
+        path: "restaurant/:restaurant_id/add-geo-location",
+        element: <AddGeoLocation />,
+      },
+      {
+        path: "restaurant/:restaurant_id/add-menu-item",
+        element: <AddMenuItems />,
+      },
+      { path: "restaurant", element: <Restaurants /> },
       { path: "restaurant-setting", element: <RestaurantSetting /> },
       { path: "update-dish", element: <UpdateDish /> },
       { path: "update-restaurant", element: <UpdateRestaurant /> },

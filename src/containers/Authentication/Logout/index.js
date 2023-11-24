@@ -4,8 +4,8 @@
  *
  */
 
-import Loader from "../../../components/Loader";
-import AuthContext from "../../../contexts/AuthContext";
+import Loader from "components/Loader";
+import AuthContext from "contexts/AuthContext";
 import { useContext, useEffect } from "react";
 
 export function Logout() {

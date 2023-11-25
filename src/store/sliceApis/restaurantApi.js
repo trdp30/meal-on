@@ -51,8 +51,8 @@ export const restaurantApi = createApi({
       invalidatesTags: (result) => [{ type: "Restaurant", id: result?._id }],
     }),
     deleteRestaurant: builder.mutation({
-      query: (params) => ({
-        url: `${version}/restaurant/${params.id}`,
+      query: (id) => ({
+        url: `${version}/restaurant/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: (result) => [{ type: "Restaurant", id: result?._id }],

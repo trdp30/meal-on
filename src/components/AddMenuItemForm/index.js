@@ -41,7 +41,7 @@ function AddMenuItemForm() {
         variant: "danger",
         message: {
           title: "Request failed",
-          summary: result.error,
+          summary: result?.error?.data?.error,
         },
       });
     }

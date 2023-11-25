@@ -48,6 +48,14 @@ const colorMap = {
     disabled:
       "cursor-not-allowed border border-gray-200 text-gray-400 bg-gray-100",
   },
+  danger: {
+    base: classNames(
+      "bg-red-700 text-white hover:bg-red-800 active:bg-red-900",
+      "focus:ring-red-900 focus:ring-2 focus-visible:outline-0",
+    ),
+    disabled:
+      "cursor-not-allowed border border-gray-200 text-gray-400 bg-gray-100",
+  },
   tertiary: {
     base: classNames(
       "text-gray-900 border border-gray-300 bg-gray-100",
@@ -159,7 +167,13 @@ Button.propTypes = {
   className: PropTypes.string,
   loading: PropTypes.bool,
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
-  type: PropTypes.oneOf(["primary", "secondary", "tertiary", "ghost"]),
+  type: PropTypes.oneOf([
+    "primary",
+    "secondary",
+    "tertiary",
+    "ghost",
+    "danger",
+  ]),
   disabled: PropTypes.bool,
   isFullWidth: PropTypes.bool,
   trailIcon: PropTypes.any,

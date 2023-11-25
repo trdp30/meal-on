@@ -14,7 +14,7 @@ function RestaurantDetails() {
   }
 
   return (
-    <div className="flex flex-1 flex-col md:flex-row min-h-0 overflow-y-auto space-y-4 pb-4">
+    <div className="flex flex-1 flex-col md:flex-row min-h-0 overflow-y-auto space-y-4">
       <div className="flex md:max-w-[400px]">
         <RestaurantDetailsCard data={data} />
       </div>

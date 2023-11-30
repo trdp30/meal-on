@@ -19,6 +19,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Logout from "./containers/Authentication/Logout";
 import AddGeoLocation from "containers/Admin/AddGeoLocation";
 import AddMenuItems from "containers/Admin/AddMenuItems";
+import CreateUser from "containers/Authentication/CreateUser";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
       { path: "restaurant-setting", element: <RestaurantSetting /> },
       { path: "update-dish", element: <UpdateDish /> },
       { path: "update-restaurant", element: <UpdateRestaurant /> },
+      { path: "create-user", element: <CreateUser /> },
     ],
   },
 ]);

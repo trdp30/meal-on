@@ -52,10 +52,7 @@ const AddGeoLocation = () => {
     submit({
       id: restaurant_id,
       body: {
-        location: {
-          lat: marker.lat,
-          lng: marker.lng,
-        },
+        location: marker,
       },
     });
   };

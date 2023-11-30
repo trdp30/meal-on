@@ -81,7 +81,7 @@ function RestaurantDetailsCard({ data }) {
           <div colSpan="2">
             <label className="text-gray-600">Location:</label>
             <p className="font-semibold text-sm break-words">
-              {JSON.stringify(location)}
+              {JSON.stringify({ lat: location?.lat, lng: location?.lng })}
             </p>
           </div>
         </div>

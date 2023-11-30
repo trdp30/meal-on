@@ -2,7 +2,12 @@
 
 import { triggerToast } from "components/Notification";
 
-let map, positionMarker, locationButton, markerTimer, centerChangeTimer;
+let map,
+  positionMarker,
+  locationButton,
+  markerTimer,
+  centerChangeTimer,
+  geocoder;
 
 export async function initMap(onInitialized, setMarker) {
   const addMarker = (cor) => {
@@ -15,8 +20,19 @@ export async function initMap(onInitialized, setMarker) {
     });
 
     clearTimeout(markerTimer);
-    markerTimer = setTimeout(() => {
-      setMarker(positionMarker.position);
+    markerTimer = setTimeout(async () => {
+      const result = await geocoder.geocode({
+        location: {
+          lat: positionMarker.position.lat,
+          lng: positionMarker.position.lng,
+        },
+      });
+      setMarker({
+        lat: positionMarker.position.lat,
+        lng: positionMarker.position.lng,
+        formatted_address: result.formatted_address,
+        place_id: result.place_id,
+      });
     }, 1000);
   };
   const onLocationButtonClick = async () => {
@@ -58,6 +74,8 @@ export async function initMap(onInitialized, setMarker) {
   // Request needed libraries.
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+  geocoder = new google.maps.Geocoder();
 
   const currentLocation = await getCurrentLocation();
 

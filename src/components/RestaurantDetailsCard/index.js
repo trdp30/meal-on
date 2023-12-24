@@ -1,7 +1,9 @@
+import { faPenToSquare } from "@fortawesome/pro-light-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "components/Button";
 import { triggerToast } from "components/Notification";
 import React, { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDeleteRestaurantMutation } from "store/sliceApis/restaurantApi";
 
 function RestaurantDetailsCard({ data }) {
@@ -21,12 +23,15 @@ function RestaurantDetailsCard({ data }) {
   } = data;
 
   const encodedUrl = useMemo(() => {
-    const search = new URLSearchParams();
-    search.set("api", 1);
-    search.set("query", `${location?.lat},${location?.lng}`);
-    search.set("query_place_id", location?.place_id);
-    const qp = search.toString();
-    return `https://www.google.com/maps/search/?${qp}`;
+    if (location?.lat && location?.lng) {
+      const search = new URLSearchParams();
+      search.set("api", 1);
+      search.set("query", `${location?.lat},${location?.lng}`);
+      search.set("query_place_id", location?.place_id);
+      const qp = search.toString();
+      return `https://www.google.com/maps/search/?${qp}`;
+    }
+    return "";
   }, [location]);
 
   useEffect(() => {
@@ -89,15 +94,30 @@ function RestaurantDetailsCard({ data }) {
           </div>
           <div colSpan="2">
             <label className="text-gray-600">Location:</label>
-            <p className="font-semibold text-sm break-words">
-              <a
-                href={encodedUrl}
-                target="_blank"
-                className="text-blue-700 cursor-pointer underline"
-                rel="noreferrer"
-              >
-                Check on map
-              </a>
+            <p className="flex font-semibold text-sm break-words">
+              {encodedUrl ? (
+                <>
+                  <a
+                    href={encodedUrl}
+                    target="_blank"
+                    className="text-blue-700 cursor-pointer underline"
+                    rel="noreferrer"
+                  >
+                    Check on map
+                  </a>
+                  <Link
+                    to="add-geo-location?edit=true"
+                    className="text-blue-700 cursor-pointer ml-6"
+                    title="Change Location"
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Link>
+                </>
+              ) : (
+                <Link to="add-geo-location?edit=true">
+                  <span className="text-blue-700">Add Location</span>
+                </Link>
+              )}
             </p>
           </div>
         </div>

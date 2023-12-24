@@ -1,17 +1,26 @@
 /* eslint-disable no-undef */
 import Button from "components/Button";
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { initMap } from "./mapConfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLocationCrosshairs } from "@fortawesome/pro-light-svg-icons";
+import {
+  faLocationCrosshairs,
+  faSpinner,
+} from "@fortawesome/pro-light-svg-icons";
 import classNames from "classnames";
-import { useUpdateRestaurantMutation } from "store/sliceApis/restaurantApi";
+import {
+  useUpdateRestaurantMutation,
+  useGetRestaurantByIdQuery,
+} from "store/sliceApis/restaurantApi";
 import { triggerToast } from "components/Notification";
 
 const AddGeoLocation = () => {
   const navigate = useNavigate();
   const { restaurant_id } = useParams();
+  const [search] = useSearchParams();
+  const isEditView = search.get("edit") === "true";
+  const { data = {}, isLoading } = useGetRestaurantByIdQuery(restaurant_id);
   const [submit, result] = useUpdateRestaurantMutation();
   const [mapLoaded, toggleMapLoaded] = useState(false);
   const [mapInstance, setMap] = useState();
@@ -24,9 +33,19 @@ const AddGeoLocation = () => {
 
   useEffect(() => {
     if (result?.isSuccess && !result?.isLoading) {
-      navigate(`/admin/restaurant/${restaurant_id}/add-menu-item`);
+      if (isEditView) {
+        navigate(`/admin/restaurant/${restaurant_id}`);
+      } else {
+        navigate(`/admin/restaurant/${restaurant_id}/add-menu-item`);
+      }
     }
-  }, [result?.isSuccess, result?.isLoading, navigate, restaurant_id]);
+  }, [
+    result?.isSuccess,
+    result?.isLoading,
+    navigate,
+    restaurant_id,
+    isEditView,
+  ]);
 
   useEffect(() => {
     if (result.isSuccess) {
@@ -57,16 +76,20 @@ const AddGeoLocation = () => {
     });
   };
 
+  const handleCancel = () => {
+    navigate(`/admin/restaurant/${restaurant_id}`);
+  };
+
   const onInitialized = (map, state) => {
     setMap(map);
     toggleMapLoaded(true);
   };
 
   useEffect(() => {
-    if (googleConstructor && !mapInstance) {
-      initMap(onInitialized, setMarker);
+    if (googleConstructor && !mapInstance && !isLoading) {
+      initMap({ onInitialized, setMarker, existingLocation: data?.location });
     }
-  }, [googleConstructor, mapInstance]);
+  }, [googleConstructor, mapInstance, isLoading, data?.location]);
 
   const disableAction = useMemo(
     () => result.isLoading || !marker || !Object.keys(marker).length,
@@ -77,13 +100,20 @@ const AddGeoLocation = () => {
     <>
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-col px-4">
-          <div className="text-base font-medium pb-4">
+          <div className="text-base font-medium pb-4 relative">
             <div>Select the location in the map:</div>
             <div className="text-xs">
               (Point the marker as closest to the location)
             </div>
           </div>
           <div id="map" className="h-full w-full"></div>
+          {isLoading && (
+            <FontAwesomeIcon
+              icon={faSpinner}
+              spin
+              className="absolute top-[50%] right-[50%]"
+            />
+          )}
           <button
             id="get-current-location"
             className={classNames(mapLoaded ? "pr-2.5" : "hidden")}
@@ -94,7 +124,21 @@ const AddGeoLocation = () => {
             />
           </button>
         </div>
-        <div className="flex justify-center py-3">
+        <div className="flex justify-center py-3 space-x-4">
+          {isEditView && (
+            <div>
+              <Button
+                onClick={handleCancel}
+                type="tertiary"
+                isFullWidth
+                size="md"
+                disabled={disableAction}
+                loading={result.isLoading}
+              >
+                Cancel
+              </Button>
+            </div>
+          )}
           <div className="w-40">
             <Button
               onClick={handleSubmit}

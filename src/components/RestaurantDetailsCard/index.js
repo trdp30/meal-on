@@ -1,6 +1,6 @@
 import Button from "components/Button";
 import { triggerToast } from "components/Notification";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteRestaurantMutation } from "store/sliceApis/restaurantApi";
 
@@ -19,6 +19,15 @@ function RestaurantDetailsCard({ data }) {
     location,
     phone,
   } = data;
+
+  const encodedUrl = useMemo(() => {
+    const search = new URLSearchParams();
+    search.set("api", 1);
+    search.set("query", `${location?.lat},${location?.lng}`);
+    search.set("query_place_id", location?.place_id);
+    const qp = search.toString();
+    return `https://www.google.com/maps/search/?${qp}`;
+  }, [location]);
 
   useEffect(() => {
     if (result.isSuccess) {
@@ -81,7 +90,14 @@ function RestaurantDetailsCard({ data }) {
           <div colSpan="2">
             <label className="text-gray-600">Location:</label>
             <p className="font-semibold text-sm break-words">
-              {JSON.stringify({ lat: location?.lat, lng: location?.lng })}
+              <a
+                href={encodedUrl}
+                target="_blank"
+                className="text-blue-700 cursor-pointer underline"
+                rel="noreferrer"
+              >
+                Check on map
+              </a>
             </p>
           </div>
         </div>

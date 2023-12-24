@@ -21,17 +21,21 @@ export async function initMap(onInitialized, setMarker) {
 
     clearTimeout(markerTimer);
     markerTimer = setTimeout(async () => {
-      const result = await geocoder.geocode({
+      const response = await geocoder.geocode({
         location: {
           lat: positionMarker.position.lat,
           lng: positionMarker.position.lng,
         },
       });
+      const parsedResponse =
+        response?.results && Array.isArray(response?.results)
+          ? response?.results[0]
+          : response;
       setMarker({
         lat: positionMarker.position.lat,
         lng: positionMarker.position.lng,
-        formatted_address: result.formatted_address,
-        place_id: result.place_id,
+        formatted_address: parsedResponse.formatted_address,
+        place_id: parsedResponse.place_id,
       });
     }, 1000);
   };

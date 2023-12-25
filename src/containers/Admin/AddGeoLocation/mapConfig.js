@@ -9,7 +9,11 @@ let map,
   centerChangeTimer,
   geocoder;
 
-export async function initMap({ onInitialized, setMarker, existingLocation }) {
+export async function initMap({
+  onInitialized,
+  setMarker,
+  existingLocation = {},
+}) {
   const addMarker = (cor) => {
     if (positionMarker?.map) positionMarker.map = null;
 
@@ -85,9 +89,9 @@ export async function initMap({ onInitialized, setMarker, existingLocation }) {
 
   const position = {
     lat:
-      existingLocation.lat || currentLocation?.coords?.latitude || 26.6330247,
+      existingLocation?.lat || currentLocation?.coords?.latitude || 26.6330247,
     lng:
-      existingLocation.lng || currentLocation?.coords?.longitude || 93.6033658,
+      existingLocation?.lng || currentLocation?.coords?.longitude || 93.6033658,
   };
 
   map = new Map(document.getElementById("map"), {

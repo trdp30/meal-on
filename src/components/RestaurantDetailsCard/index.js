@@ -59,7 +59,9 @@ function RestaurantDetailsCard({ data }) {
     deleteRestaurant(data._id);
   };
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    navigate("update-restaurant");
+  };
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden">

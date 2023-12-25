@@ -72,7 +72,10 @@ const router = createBrowserRouter([
       { path: "restaurant", element: <Restaurants /> },
       { path: "restaurant-setting", element: <RestaurantSetting /> },
       { path: "update-dish", element: <UpdateDish /> },
-      { path: "update-restaurant", element: <UpdateRestaurant /> },
+      {
+        path: "restaurant/:restaurant_id/update-restaurant",
+        element: <UpdateRestaurant />,
+      },
       { path: "create-user", element: <CreateUser /> },
     ],
   },

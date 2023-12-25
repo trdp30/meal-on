@@ -14,13 +14,18 @@ import {
   useGetRestaurantByIdQuery,
 } from "store/sliceApis/restaurantApi";
 import { triggerToast } from "components/Notification";
+import NotFound from "components/NotFound";
 
 const AddGeoLocation = () => {
   const navigate = useNavigate();
   const { restaurant_id } = useParams();
   const [search] = useSearchParams();
   const isEditView = search.get("edit") === "true";
-  const { data = {}, isLoading } = useGetRestaurantByIdQuery(restaurant_id);
+  const {
+    data = {},
+    isLoading,
+    error,
+  } = useGetRestaurantByIdQuery(restaurant_id);
   const [submit, result] = useUpdateRestaurantMutation();
   const [mapLoaded, toggleMapLoaded] = useState(false);
   const [mapInstance, setMap] = useState();
@@ -95,6 +100,10 @@ const AddGeoLocation = () => {
     () => result.isLoading || !marker || !Object.keys(marker).length,
     [marker, result],
   );
+
+  if (error?.originalStatus === 404) {
+    return <NotFound handleBackClick={() => navigate("/admin/restaurant")} />;
+  }
 
   return (
     <>

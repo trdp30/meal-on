@@ -1,16 +1,26 @@
 import Loader from "components/Loader";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetRestaurantByIdQuery } from "store/sliceApis/restaurantApi";
 import RestaurantDetailsCard from "components/RestaurantDetailsCard";
 import MenuItemList from "components/MenuItemList";
+import NotFound from "components/NotFound";
 
 function RestaurantDetails() {
   const { restaurant_id } = useParams();
-  const { data = {}, isLoading } = useGetRestaurantByIdQuery(restaurant_id);
+  const navigate = useNavigate();
+  const {
+    data = {},
+    isLoading,
+    error,
+  } = useGetRestaurantByIdQuery(restaurant_id);
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (error?.originalStatus === 404) {
+    return <NotFound handleBackClick={() => navigate("/admin/restaurant")} />;
   }
 
   return (
